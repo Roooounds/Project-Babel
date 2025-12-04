@@ -1,0 +1,22 @@
+{
+  "protocol_name": "Project Babel Standard",
+  "version": "1.0.0",
+  "description": "Defines how unstructured signals must be formatted for AI retrieval.",
+  "required_fields": [
+    "entity_type",
+    "summary",
+    "geo_location",
+    "timestamp"
+  ],
+  "grading_system": {
+    "Grade A": "Like New / Unused / Perfect Status",
+    "Grade B": "Minor Signs of Wear / Good Status",
+    "Grade C": "Visible Defects / Crowded Status",
+    "Grade D": "Functional Issues / Unavailable"
+  },
+  "intent_classification": [
+    "Supply (Selling/Sharing)",
+    "Demand (Buying/Looking for)",
+    "Status_Update (Traffic/Queue/Environment)"
+  ]
+}
