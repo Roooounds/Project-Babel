@@ -41,15 +41,21 @@ Use this to validate the data structure.
 
 ## 4. Use Cases (应用场景)
 
-Hyper-local Commerce (本地交易): * User: "Selling a keyboard, pick up at Sanlitun."
+Hyper-local Commerce (本地交易): 
+
+* User: "Selling a keyboard, pick up at Sanlitun."
 
 Babel: Generates a Structured Product API.
 
-Real-time Status (实时状态): * User: "Costco queue is 30 mins long."
+Real-time Status (实时状态): 
+
+* User: "Costco queue is 30 mins long."
 
 Babel: Generates an LBS Status API.
 
-Resource Sharing (资源共享): * User: "I have a free parking spot here."
+Resource Sharing (资源共享): 
+
+* User: "I have a free parking spot here."
 
 Babel: Generates a Resource Allocation API.
 
