@@ -1,40 +1,134 @@
-## Demo Case: Selling an Office Chair via Voice (SF Bay Area)
+# Demo Cases: Babel in Action
 
-**Scenario:** A user in San Francisco wants to sell their used office chair quickly. They send a casual voice message to the Babel Engine.
+This document demonstrates how **Project Babel** standardizes diverse real-world signals into AI-readable JSON. 
 
-### 1. User Input (Unstructured Voice Transcript)
-> "Yo, I'm listing my Herman Miller Aeron chair. It's a size B. The mesh is still perfect, but the left armrest is kinda scuffed up from hitting my desk. Asking $450. You gotta pick it up from my place in SoMa, San Francisco. Need it gone by weekend."
+We cover 5 core scenarios:
+1.  **Standard Goods** (Second-hand Furniture)
+2.  **Perishable Goods** (Fresh Catch/Market)
+3.  **Dynamic Mobility** (Ride Sharing)
+4.  **Real-time Status** (Crowd/Queue)
+5.  **Resource Sharing** (EV Charging)
 
-### 2. Babel Processing Pipeline
-* **Entity Detection:** Herman Miller Aeron Chair (Size B).
-* **Condition Assessment:** "Mesh perfect" + "armrest scuffed" -> Mapped to **Grade B (Minor Signs of Wear)**.
-* **Pricing extraction:** $450 USD.
-* **Location grounding:** SoMa, San Francisco -> Resolved to GPS coordinates `37.77, -122.41`.
-* **Urgency signal:** "by weekend" -> Added temporal context.
+---
 
-### 3. JSON Output (Standardized)
+## Case 1: Selling an Office Chair (Standard Goods)
+**📍 Location:** San Francisco, USA
+**🎙️ Input:** "I'm listing my Herman Miller Aeron chair. Size B. Mesh is perfect, but left armrest is scuffed. Asking $450. Pick up at SoMa."
+
+**📄 JSON Output:**
 ```json
 {
-  "@context": "[https://schema.org/](https://schema.org/)",
+  "@context": "https://schema.org/",
   "@type": "Product",
   "name": "Herman Miller Aeron Chair - Size B",
-  "description": "Used Herman Miller Aeron (Size B). Mesh fabric in excellent condition. Minor scuffs present on the left armrest.",
+  "description": "Used Herman Miller Aeron. Minor scuffs on armrest.",
   "spatialCoverage": {
     "@type": "Place",
-    "name": "SoMa, San Francisco, CA",
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "37.7749",
-      "longitude": "-122.4194"
-    }
+    "name": "SoMa, San Francisco",
+    "geo": { "latitude": "37.77", "longitude": "-122.41" }
   },
   "offers": {
     "@type": "Offer",
     "price": 450.00,
     "priceCurrency": "USD",
-    "availability": "[https://schema.org/InStock](https://schema.org/InStock)",
-    "itemCondition": "Grade B",
-    "priceValidUntil": "2025-10-12T23:59:59"
-  },
-  "keywords": ["Office Chair", "Herman Miller", "Aeron", "Used Furniture", "SF Bay Area"]
+    "itemCondition": "Grade B"
+  }
 }
+```
+
+---
+
+## Case 2: Fresh Catch at the Dock (Perishable Goods)
+**📍 Location:**  Gloucester Harbor, MA, USA 
+**🎙️ Input:** "Just docked at Pier 4. We have 50 lbs of fresh Mackerel, caught this morning. $8 a pound. First come first serve, we leave in 2 hours."
+**⚙️ Babel Insight:**  Captures "Perishability" and "Urgency".
+
+**📄 JSON Output:** 
+```json
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "category": "Seafood",
+  "name": "Fresh Mackerel (Morning Catch)",
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "Pier 4, Gloucester Harbor",
+    "geo": { "latitude": "42.61", "longitude": "-70.66" }
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": 8.00,
+    "priceCurrency": "USD",
+    "unitCode": "LBR", 
+    "inventoryLevel": "50 lbs",
+    "validThrough": "2025-10-24T12:00:00-05:00" 
+  }
+}
+```
+
+---
+
+## Case 3: Hitching a Ride (Dynamic Mobility)
+**📍 Location:** Beijing, China 
+**🎙️ Input:** "I'm driving from Guomao to the Airport right now. I have 2 empty seats. Just share the gas money, maybe 30 RMB. Leaving in 5 mins."
+**⚙️ Babel Insight:** Maps "Origin -> Destination" and "Capacity".
+
+**📄 JSON Output:**
+```json
+{
+  "@context": "https://schema.org/",
+  "@type": "TravelAction",
+  "name": "Ride Share: Guomao to PEK Airport",
+  "agent": { "@type": "Person", "name": "Anonymous Driver" },
+  "fromLocation": "Guomao CBD",
+  "toLocation": "Beijing Capital Airport (PEK)",
+  "startTime": "2025-10-24T14:05:00+08:00",
+  "object": {
+    "@type": "TransportationService",
+    "vehicleType": "Car",
+    "availableSeats": 2,
+    "price": "30 CNY"
+  }
+}
+```
+
+---
+
+## Case 4: Coffee Shop Queue (Real-time Status)
+**📍 Location:** Shibuya, Tokyo, Japan 
+**🎙️ Input:** "Starbucks at Shibuya Crossing is absolutely packed. Line is out the door, wait time is at least 20 mins."
+
+**📄 JSON Output:**
+```json
+{
+  "@context": "https://schema.org/",
+  "@type": "Service",
+  "name": "Starbucks - Shibuya Crossing",
+  "status": {
+    "@type": "RealTimeStatus",
+    "crowdLevel": "High",
+    "estimatedWaitTime": "PT20M"
+  }
+}
+```
+
+---
+
+## Case 5: Sharing EV Charger (Resource Sharing)
+**📍 Location:** London, UK 
+**🎙️ Input:** "My private driveway EV charger is available for the next 4 hours. 5 pounds flat rate."
+
+**📄 JSON Output:**
+```json
+{
+  "@context": "https://schema.org/",
+  "@type": "CivicStructure",
+  "name": "Private EV Charging Spot",
+  "offers": {
+    "@type": "Offer",
+    "price": 5.00,
+    "priceCurrency": "GBP",
+    "validThrough": "T+4H"
+  }
+}
+```
